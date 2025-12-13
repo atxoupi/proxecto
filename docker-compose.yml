@@ -1,0 +1,38 @@
+
+services:
+  frontend:
+    build: ./proxecto-front
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    depends_on:
+      - backend
+    volumes:
+      - ./proxecto-back/media:/usr/share/nginx/html/media
+
+
+  backend:
+    build: ./proxecto-back
+    env_file:
+      - ./proxecto-back/.env
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    depends_on:
+      - database
+    expose:
+      - "8000"
+    volumes:
+      - ./proxecto-back/media:/usr/share/nginx/html/media
+
+
+  database:
+    image: postgres:17.5-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dataWeb
+    volumes:
+      - "database-data:/var/lib/postgresql/data"
+
+volumes:
+  database-data:
