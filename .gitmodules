@@ -1,0 +1,6 @@
+[submodule "proxecto-back"]
+	path = proxecto-back
+	url = https://github.com/atxoupi/proxecto-back.git
+[submodule "proxecto-front"]
+	path = proxecto-front
+	url = https://github.com/atxoupi/proxecto-front.git
